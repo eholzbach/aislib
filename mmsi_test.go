@@ -28,18 +28,27 @@ func TestDecodeMMSI(t *testing.T) {
 		MMSI      uint32
 		reference string
 	}{
-		{227006760, "Ship, France"},
-		{2573425, "Coastal Station, Norway"},
-		{25634906, "Group of ships, Malta"},
-		{842517724, "Diver's radio, Iraq (Republic of)"},
-		{992351000, "Aids to navigation, United Kingdom of Great Britain and Northern Ireland"},
+		{227006760, "Ship France"},
+		{2573425, "Coastal Station Norway"},
+		{25634906, "Group of ships Malta"},
+		{842517724, "Diver's radio Iraq (Republic of)"},
+		{992351000, "Aids to navigation United Kingdom of Great Britain and Northern Ireland"},
 		{1000010000, "Invalid MMSI"},
 		{972345000, "MOB —Man Overboard Device"},
-		{970241023, "AIS SART —Search and Rescue Transmitter, Greece"},
+		{970241023, "AIS SART —Search and Rescue Transmitter Greece"},
 		{971356034, "Invalid MMSI"},
 	}
 	for _, c := range cases {
-		got := DecodeMMSI(c.MMSI)
+		a, b := DecodeMMSI(c.MMSI)
+
+		var got string
+
+		if b != "" {
+			got = a + " " + b
+		} else {
+			got = a
+		}
+
 		if got != c.reference {
 			fmt.Println("Got : ", got)
 			fmt.Println("Want: ", c.reference)

@@ -35,10 +35,14 @@ func (m BaseStationReport) String() string {
 		raim = "in use"
 	}
 
+	device, country := DecodeMMSI(m.MMSI)
+
 	message :=
 		fmt.Sprintf("=== Base Station Report ===\n") +
 			fmt.Sprintf(" Repeat       : %d\n", m.Repeat) +
-			fmt.Sprintf(" MMSI         : %09d [%s]\n", m.MMSI, DecodeMMSI(m.MMSI)) +
+			fmt.Sprintf(" MMSI         : %09d\n", m.MMSI) +
+			fmt.Sprintf(" Device       : %s\n", device) +
+			fmt.Sprintf(" Country      : %s\n", country) +
 			fmt.Sprintf(" Time         : %s\n", m.Time.String()) +
 			fmt.Sprintf(" Accuracy     : %s\n", accuracy) +
 			fmt.Sprintf(" Coordinates  : %s\n", CoordinatesDeg2Human(m.Lon, m.Lat)) +
@@ -119,10 +123,14 @@ func (m ClassAPositionReport) String() string {
 		raim = "in use"
 	}
 
+	device, country := DecodeMMSI(m.MMSI)
+
 	message :=
 		fmt.Sprintf("=== Class A Position Report (%d) ===\n", m.Type) +
 			fmt.Sprintf(" Repeat       : %d\n", m.Repeat) +
-			fmt.Sprintf(" MMSI         : %09d [%s]\n", m.MMSI, DecodeMMSI(m.MMSI)) +
+			fmt.Sprintf(" MMSI         : %09d\n", m.MMSI) +
+			fmt.Sprintf(" Device       : %s\n", device) +
+			fmt.Sprintf(" Country      : %s\n", country) +
 			fmt.Sprintf(" Nav.Status   : %s\n", NavigationStatusCodes[m.Status]) +
 			fmt.Sprintf(" Turn (ROT)   : %s\n", turn) +
 			fmt.Sprintf(" Speed (SOG)  : %s\n", speed) +
@@ -176,10 +184,14 @@ func (m ClassBPositionReport) String() string {
 		heading = "please report this to developer"
 	}
 
+	device, country := DecodeMMSI(m.MMSI)
+
 	message :=
 		fmt.Sprintf("=== Class B Position Report ===\n") +
 			fmt.Sprintf(" Repeat       : %d\n", m.Repeat) +
-			fmt.Sprintf(" MMSI         : %09d [%s]\n", m.MMSI, DecodeMMSI(m.MMSI)) +
+			fmt.Sprintf(" MMSI         : %09d\n", m.MMSI) +
+			fmt.Sprintf(" Device       : %s\n", device) +
+			fmt.Sprintf(" Country      : %s\n", country) +
 			fmt.Sprintf(" Speed (SOG)  : %s\n", speed) +
 			fmt.Sprintf(" Accuracy     : %s\n", accuracy) +
 			fmt.Sprintf(" Coordinates  : %s\n", CoordinatesDeg2Human(m.Lon, m.Lat)) +
@@ -216,10 +228,14 @@ func (m StaticVoyageData) String() string {
 		draught = strconv.Itoa(10*int(m.IMO)) + " meters"
 	}
 
+	device, country := DecodeMMSI(m.MMSI)
+
 	message :=
 		fmt.Sprintf("=== Static and Voyage Related Data ===\n") +
 			fmt.Sprintf(" Repeat       : %d\n", m.Repeat) +
-			fmt.Sprintf(" MMSI         : %09d [%s]\n", m.MMSI, DecodeMMSI(m.MMSI)) +
+			fmt.Sprintf(" MMSI         : %09d\n", m.MMSI) +
+			fmt.Sprintf(" Device       : %s\n", device) +
+			fmt.Sprintf(" Country      : %s\n", country) +
 			fmt.Sprintf(" AIS Version  : %d\n", m.AisVersion) +
 			fmt.Sprintf(" IMO number   : %s\n", imo) +
 			fmt.Sprintf(" Call Sign    : %s\n", m.Callsign) +
@@ -254,10 +270,14 @@ func type5size2String(min, max, size int) string {
 // PrintBinaryBroadcast returns a string with some data for a Binary Broadcast message
 func (m BinaryBroadcast) String() string {
 
+	device, country := DecodeMMSI(m.MMSI)
+
 	message :=
 		fmt.Sprintf("=== Binary Broadcast ===\n") +
 			fmt.Sprintf(" Repeat       : %d\n", m.Repeat) +
-			fmt.Sprintf(" MMSI         : %09d [%s]\n", m.MMSI, DecodeMMSI(m.MMSI)) +
+			fmt.Sprintf(" MMSI         : %09d\n", m.MMSI) +
+			fmt.Sprintf(" Device       : %s\n", device) +
+			fmt.Sprintf(" Country      : %s\n", country) +
 			fmt.Sprintf(" DAC-FID      : %d-%d (%s)\n", m.DAC, m.FID, BinaryBroadcastType[int(m.DAC)][int(m.FID)])
 
 	return message

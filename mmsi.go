@@ -29,7 +29,7 @@ var MmsiCodes = [...]string{
 // Some MMSIs aren't valid. There is some more information in some MMSIs (the satellite
 // equipment of the ship). We may add them in the future.
 // Have a look at http://en.wikipedia.org/wiki/Maritime_Mobile_Service_Identity
-func DecodeMMSI(m uint32) string {
+func DecodeMMSI(m uint32) (string, string) {
 	owner := ""
 	country := ""
 	mid := uint32(1000)
@@ -76,9 +76,9 @@ func DecodeMMSI(m uint32) string {
 		if country == "" {
 			country = "Unknown Country ID"
 		}
-		return owner + ", " + country
+		return owner, country
 	}
-	return owner
+	return owner, country
 }
 
 // Maritime Identification Digits, have a look at http://www.itu.int/online/mms/glad/cga_mids.sh?lang=en
